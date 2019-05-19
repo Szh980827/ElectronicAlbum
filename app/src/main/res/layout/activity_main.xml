@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="#000"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:text="aha"
+        android:textColor="#fff"
+        android:textSize="60sp" />
+    <TextView
+        android:id="@+id/bie"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:text="别"
+        android:textColor="#fff"
+        android:textSize="400sp" />
+    <TextView
+        android:id="@+id/zhuibeihaolema"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:text="追备好了吗？"
+        android:textColor="@color/colorOrange"
+        android:textSize="60sp" />
+    <TextView
+        android:id="@+id/rang"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:text="让"
+        android:textColor="#E91E63"
+        android:textSize="200sp" />
+    <TextView
+        android:id="@+id/daojishi"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:text="3"
+        android:textColor="@color/colorWhite"
+        android:textSize="300sp" />
+    <TextView
+        android:id="@+id/action"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:text="action！"
+        android:textColor="#4CAF50"
+        android:textSize="100sp" />
+
+
+</RelativeLayout>
