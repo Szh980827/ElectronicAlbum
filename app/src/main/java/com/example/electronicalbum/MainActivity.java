@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 	private String talk[] =
 			{"hello","hello","hello", "你好啊", "接下来", "让", "我们", "进入", "属于我们", "的", "回忆",
 					"准备好了没？", "千万", "别", "眨眼", "3", "2", "1", "Action!","不","不","不",
-					"我想","我想","你还需要再等会","你还需要再等会","Wait a moment！","怕","你",
+					"我想","你还需要再等会","你还需要再等会","Wait a moment！","怕","你",
 					"还没有追备好","是","不是","有点","迫不及待了呢?", "OK","现在","我们正式","开始！"};
 
 	@Override
