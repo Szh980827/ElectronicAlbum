@@ -29,7 +29,8 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 	private AnimatorSet addBillTranslate3;
 
 	private MediaPlayer mediaPlayer;
-	private int[] rawlist = new int[]{R.raw.yanhuo, R.raw.haoxianghaoxiang, R.raw.forforever,R.raw.yourname,R.raw.yilei,R.raw.guowang};
+	private int[] rawlist = new int[]{R.raw.yanhuo, R.raw.diqiuzhiyan, R.raw.haoxianghaoxiang, R.raw.forforever, R.raw.yourname, R.raw.yilei, R.raw.guowang};
+	private String rawName[] = {"烟火里的尘埃", "地球之盐", "好想好想+情深深雨蒙蒙", "For Forever", "你的名字Bgm", "异类", "国王与乞丐"};
 	private int playId = 0;
 
 	@Override
@@ -112,7 +113,6 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 					playId = playId - 1;
 				}
 				playRawMusic(playId);
-				Toast.makeText(this, "上一曲", Toast.LENGTH_SHORT).show();
 				hideFABMenu();
 				break;
 			case R.id.fab_next:
@@ -122,7 +122,6 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 					playId = playId + 1;
 				}
 				playRawMusic(playId);
-				Toast.makeText(this, "下一曲", Toast.LENGTH_SHORT).show();
 				hideFABMenu();
 				break;
 
@@ -141,5 +140,6 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		}
 		mediaPlayer = MediaPlayer.create(this, rawlist[id]);
 		mediaPlayer.start();
+		Toast.makeText(this, rawName[id], Toast.LENGTH_SHORT).show();
 	}
 }
