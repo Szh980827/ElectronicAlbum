@@ -16,10 +16,10 @@ import java.io.IOException;
 
 public class Main2Activity extends AppCompatActivity implements View.OnClickListener {
 
-	private FloatingActionButton fab;
+	private FloatingActionButton fab2;
 	private Button button1, button2;
 	private MediaPlayer mediaPlayer;
-	private int rawlist[] = {R.raw.abc, R.raw.yourname, R.raw.one};
+	private int rawlist[] = {R.raw.yourname, R.raw.one};
 	private int cur = 0;
 
 	@Override
@@ -27,8 +27,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main2);
 		openRawMusicS(cur);
-		fab = findViewById(R.id.fab);
-		fab.setOnClickListener(this);
+		fab2 = findViewById(R.id.fab);
+		fab2.setOnClickListener(this);
 		button1 = findViewById(R.id.button1);
 		button1.setOnClickListener(this);
 		button2 = findViewById(R.id.button2);

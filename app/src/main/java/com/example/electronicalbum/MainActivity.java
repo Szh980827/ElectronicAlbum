@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
 	private String talk[] =
 			{"hello","hello","hello", "你好啊", "接下来", "让", "我们", "进入", "属于我们", "的", "回忆",
 					"准备好了没？", "千万", "别", "眨眼", "3", "2", "1", "Action!","不","不","不",
-					"我想","你还需要再等会","你还需要再等会","Wait a moment！","怕","你",
-					"还没有准备好","是","不是","有点","迫不及待了呢?", "OK","现在","我们正式","开始！"};
+					"我想","你还需要","再等会","Wait a moment！","怕","你",
+					"还没有","准备好","是","不是","有点","迫不及待了呢?", "OK","现在","我们正式","开始！"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					if (talk[i].equals("准备好了没？") || talk[i].equals("Wait a moment！")) {
+					if (talk[i].equals("准备好了没？") || talk[i].equals("Wait a moment！") || talk[i].equals("准备好")) {
 						Message msg = new Message();
 						msg.obj = talk[i];
 						handler2.sendMessage(msg);
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 						handler.sendMessage(msg);
 					}
 				}
-				Intent intent1 = new Intent(MainActivity.this, Main2Activity.class);
+				Intent intent1 = new Intent(MainActivity.this, Main3Activity.class);
 				mediaPlayer.release();
 				startActivity(intent1);
 				finish();
