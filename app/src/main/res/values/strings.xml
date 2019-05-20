@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">ElectronicAlbum</string>
+
+    <string-array name="musicName">
+        <item>烟火里的尘埃</item>
+        <item>地球之盐</item>
+        <item>好想好想+情深深雨蒙蒙</item>
+        <item>For Forever</item>
+        <item>你的名字Bgm</item>
+        <item>异类</item>
+        <item>国王与乞丐</item>
+    </string-array>
 </resources>
