@@ -7,149 +7,163 @@
     android:layout_height="match_parent"
     tools:context=".Main3Activity">
 
+    <FrameLayout
+        android:id="@+id/prefFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
-
-    <RelativeLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/rlAddBill"
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#A4363535"
-            android:visibility="gone">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <LinearLayout
-                android:id="@+id/ll_next"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/rlAddBill"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#A4363535"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/ll_next"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="100dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_next"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_toLeftOf="@+id/miniFab02"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingBottom="5dp"
+                        android:text="下一曲  "
+                        android:textColor="#B0FFFFFF"
+                        android:textSize="15sp" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/fab_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="25dp"
+                        android:src="@mipmap/next"
+                        app:backgroundTint="#2196F3"
+                        app:elevation="5dp"
+                        app:fabSize="mini" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_last"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/ll_next"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_last"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_toLeftOf="@+id/miniFab02"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingBottom="5dp"
+                        android:text="上一曲  "
+                        android:textColor="#B0FFFFFF"
+                        android:textSize="15sp" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/fab_last"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="25dp"
+                        android:src="@mipmap/last"
+                        app:backgroundTint="#2196F3"
+                        app:elevation="5dp"
+                        app:fabSize="mini" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_play"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/ll_last"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_play"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_toLeftOf="@+id/miniFab02"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingBottom="5dp"
+                        android:text="播放/暂停  "
+                        android:textColor="#B0FFFFFF"
+                        android:textSize="15sp" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/fab_play"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="25dp"
+                        android:src="@mipmap/play_pause"
+                        app:backgroundTint="#FF9800"
+                        app:elevation="5dp"
+                        app:fabSize="mini" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="100dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_next"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_toLeftOf="@+id/miniFab02"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingBottom="5dp"
-                    android:text="下一曲  "
-                    android:textColor="#B0FFFFFF"
-                    android:textSize="15sp" />
-
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab_next"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="25dp"
-                    android:src="@mipmap/next"
-                    app:backgroundTint="#2196F3"
-                    app:elevation="5dp"
-                    app:fabSize="mini" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_last"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/ll_next"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_last"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_toLeftOf="@+id/miniFab02"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingBottom="5dp"
-                    android:text="上一曲  "
-                    android:textColor="#B0FFFFFF"
-                    android:textSize="15sp" />
-
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab_last"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="25dp"
-                    android:src="@mipmap/last"
-                    app:backgroundTint="#2196F3"
-                    app:elevation="5dp"
-                    app:fabSize="mini" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_play"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/ll_last"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_play"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_toLeftOf="@+id/miniFab02"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingBottom="5dp"
-                    android:text="播放/暂停  "
-                    android:textColor="#B0FFFFFF"
-                    android:textSize="15sp" />
-
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab_play"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="25dp"
-                    android:src="@mipmap/play_pause"
-                    app:backgroundTint="#FF9800"
-                    app:elevation="5dp"
-                    app:fabSize="mini" />
-
-            </LinearLayout>
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="20dp"
+                android:elevation="5dp"
+                android:src="@mipmap/add"
+                app:backgroundTint="#31bfcf"
+                app:fabSize="normal"
+                app:rippleColor="#e7d161" />
         </RelativeLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="20dp"
-            android:elevation="5dp"
-            android:src="@mipmap/add"
-            app:backgroundTint="#31bfcf"
-            app:fabSize="normal"
-            app:rippleColor="#e7d161" />
-    </RelativeLayout>
-
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-    </FrameLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

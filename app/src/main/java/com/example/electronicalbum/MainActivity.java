@@ -7,19 +7,21 @@ import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
 	private TextView textView1, textView2, textView3, rang, daojishi, action;
 	Handler handler, handler1, handler2, handlerRang, handlerDaojishi, handlerAction;
+	private Button button;
 
 	private MediaPlayer mediaPlayer;
-	private String talk[] =
-			{"hello","hello","hello", "你好啊", "接下来", "让", "我们", "进入", "属于我们", "的", "回忆",
-					"准备好了没？", "千万", "别", "眨眼", "3", "2", "1", "Action!","不","不","不",
-					"我想","你还需要","再等会","Wait a moment！","怕","你",
-					"还没有","准备好","是","不是","有点","迫不及待了呢?", "OK","现在","我们正式","开始！"};
+	private String talk[] = {"hello", "hello", "hello", "你好啊", "接下来", "让", "我们", "进入",
+			"属于我们", "的", "回忆", "准备好了没？", "千万", "别", "眨眼", "3", "2", "1", "Action!",
+			"不", "不", "不", "我想", "你还需要", "再等会", "Wait a moment！", "怕", "你", "还没有",
+			"准备好", "是", "不是", "有点", "迫不及待了呢?", "OK", "现在", "我们正式", "开始！"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,20 @@ public class MainActivity extends AppCompatActivity {
 		rang = findViewById(R.id.rang);
 		daojishi = findViewById(R.id.daojishi);
 		action = findViewById(R.id.action);
-		mediaPlayer = MediaPlayer.create(this,R.raw.def);
+		textView1.setText("");
+		textView2.setText("");
+		textView3.setText("");
+		rang.setText("");
+		daojishi.setText("");
+		action.setText("");
+		mediaPlayer = MediaPlayer.create(this, R.raw.def);
+		button = findViewById(R.id.tiaoguo);
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				closeActivity();
+			}
+		});
 		textShan();
 	}
 
@@ -155,11 +170,16 @@ public class MainActivity extends AppCompatActivity {
 						handler.sendMessage(msg);
 					}
 				}
-				Intent intent1 = new Intent(MainActivity.this, Main3Activity.class);
-				mediaPlayer.release();
-				startActivity(intent1);
-				finish();
+				closeActivity();
 			}
 		}.start();
 	}
+
+	private void closeActivity() {
+		Intent intent1 = new Intent(MainActivity.this, Main3Activity.class);
+		mediaPlayer.release();
+		startActivity(intent1);
+		finish();
+	}
 }
+

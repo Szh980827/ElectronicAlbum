@@ -2,11 +2,13 @@ package com.example.electronicalbum;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
-import android.animation.Animator;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -15,7 +17,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -24,10 +27,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class Main3Activity extends AppCompatActivity implements View.OnClickListener {
 
 	private DrawerLayout drawerLayout;
-
 	private FloatingActionButton fabadd;
 	private boolean isAdd = false;
 	private RelativeLayout rlAddBill;
@@ -35,11 +41,9 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 	private LinearLayout[] ll = new LinearLayout[llId.length];
 	private int[] fabId = new int[]{R.id.fab_last, R.id.fab_next, R.id.fab_play};
 	private FloatingActionButton[] fab = new FloatingActionButton[fabId.length];
-
 	private AnimatorSet addBillTranslate1;
 	private AnimatorSet addBillTranslate2;
 	private AnimatorSet addBillTranslate3;
-
 	private MediaPlayer mediaPlayer;
 	private int[] rawlist = new int[]{R.raw.yanhuo, R.raw.diqiuzhiyan,
 			R.raw.haoxianghaoxiang, R.raw.forforever, R.raw.yilei, R.raw.guowang,
@@ -52,10 +56,23 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 			"消愁(live)", "你的名字bgm"};
 	private int playId = 0;
 
+	private Photoes[] photoes = {
+			new Photoes("one", R.mipmap.photo1),
+			new Photoes("two", R.mipmap.photo2),
+			new Photoes("three", R.mipmap.photo3),
+			new Photoes("for", R.mipmap.photo4),
+			new Photoes("five", R.mipmap.photo5),
+			new Photoes("six", R.mipmap.photo6),
+			new Photoes("seven", R.mipmap.photo7)
+	};
+	private List<Photoes> photoesList = new ArrayList<>();
+	private PhotoesAdapter adapter;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main3);
+		setString();
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		drawerLayout = findViewById(R.id.drawer_layout);
@@ -65,6 +82,20 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 			actionBar.setDisplayHomeAsUpEnabled(true);
 			actionBar.setHomeAsUpIndicator(R.mipmap.touxiang1);
 		}
+		/*
+		 * 加载  PrefFragment
+		 */
+//		FragmentManager fragmentManager = getFragmentManager();
+//		FragmentTransaction transaction = fragmentManager.beginTransaction();
+//		BlankFragment blankFragment = new BlankFragment();
+//		transaction.add(R.id.prefFragment, blankFragment);
+//		transaction.commit();
+
+
+
+		/*
+		 * NavigationView 侧滑栏单击事件
+		 */
 		navigationView.setCheckedItem(R.id.nav_rawlist);
 		navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 			@Override
@@ -76,16 +107,22 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 						startActivityForResult(intent, 1);
 						break;
 					case R.id.nav_friend:
-						Toast.makeText(Main3Activity.this, "friend", Toast.LENGTH_SHORT).show();
+						Toast.makeText(Main3Activity.this, "设置", Toast.LENGTH_SHORT).show();
 						break;
 				}
 				drawerLayout.closeDrawers();
 				return true;
 			}
 		});
+		/*
+		 * 悬浮按钮 相关方法
+		 */
 		initView();
 		setDefaultValues();
 		bindEvents();
+		/*
+		 * mediaPlayer 媒体播放器
+		 */
 		playRawMusic(playId);
 		mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 			@Override
@@ -98,8 +135,40 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 				playRawMusic(playId);
 			}
 		});
+		mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+			@Override
+			public boolean onError(MediaPlayer mp, int what, int extra) {
+				return true;
+			}
+		});
+
+		/*
+		 * CardView
+		 */
+		initPhotoes();
+		RecyclerView recyclerView = findViewById(R.id.recycler_view);
+		GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+		recyclerView.setLayoutManager(layoutManager);
+		adapter = new PhotoesAdapter(photoesList);
+		recyclerView.setAdapter(adapter);
 	}
 
+	/*
+	 * CardView 初始化
+	 */
+
+	private void initPhotoes() {
+		photoesList.clear();
+		for (int i = 0; i < 50; i++) {
+			Random random = new Random();
+			int index = random.nextInt(photoes.length);
+			photoesList.add(photoes[index]);
+		}
+	}
+
+	/*
+	 * 接收 Main2Activity 返回的 playId
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -111,6 +180,9 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		}
 	}
 
+	/*
+	 * 侧滑栏
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -118,11 +190,13 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 				drawerLayout.openDrawer(GravityCompat.START);
 				break;
 			default:
-
 		}
 		return true;
 	}
 
+	/*
+	 * 悬浮按钮的初始化
+	 */
 	private void initView() {
 		fabadd = findViewById(R.id.fab1);
 		rlAddBill = findViewById(R.id.rlAddBill);
@@ -134,12 +208,18 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		}
 	}
 
+	/*
+	 * 悬浮按钮的属性动画
+	 */
 	private void setDefaultValues() {
 		addBillTranslate1 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.set_animator);
 		addBillTranslate2 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.set_animator);
 		addBillTranslate3 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.set_animator);
 	}
 
+	/*
+	 * 悬浮按钮的单击事件初始化
+	 */
 	private void bindEvents() {
 		fabadd.setOnClickListener(this);
 		for (int i = 0; i < fabId.length; i++) {
@@ -147,7 +227,9 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		}
 	}
 
-
+	/*
+	 * 悬浮按钮的单击事件
+	 */
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -202,6 +284,9 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		isAdd = false;
 	}
 
+	/*
+	 * 媒体播放器相关
+	 */
 	private void playRawMusic(int id) {
 		if (mediaPlayer != null) {
 			mediaPlayer.stop();
@@ -209,26 +294,45 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		}
 		mediaPlayer = MediaPlayer.create(this, rawlist[id]);
 		mediaPlayer.start();
-		Toast.makeText(this, rawName[id], Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "正在播放：" + rawName[id], Toast.LENGTH_SHORT).show();
 	}
+
 	@Override
 	protected void onRestart() {
 		super.onRestart();
 		hideFABMenu();
-
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-
 	}
 
+	/*
+	 * 重写安卓返回按钮
+	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			finish();
 		}
 		return true;
+	}
+
+	/*
+	 * 歌曲名添加演唱者
+	 */
+	private void setString() {
+		for (int i = 0; i < rawName.length; i++) {
+			if (i < 10) {
+				rawName[i] = rawName[i] + " - 华晨宇";
+			} else if (i == 10) {
+				rawName[i] = rawName[i] + " - 王源";
+			} else if (i > 10 & i < 15) {
+				rawName[i] = rawName[i] + " - 林俊杰";
+			} else if (i > 14 & i < 18) {
+				rawName[i] = rawName[i] + " - 毛不易";
+			}
+		}
 	}
 }

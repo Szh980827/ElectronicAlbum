@@ -1,7 +1,6 @@
 package com.example.electronicalbum;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import java.util.List;
  */
 
 public class RawlistAdapter extends ArrayAdapter<RawList> {
-
 	private int resourceId;
 
 	public RawlistAdapter(Context context, int textViewResourceId, List<RawList> objects) {
