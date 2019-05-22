@@ -1,6 +1,7 @@
 package com.example.electronicalbum;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
@@ -31,6 +32,26 @@ public class MainActivity extends AppCompatActivity {
 		if (actionbar != null) {
 			actionbar.hide();
 		}
+		initControl();
+		SharedPreferences pref = getSharedPreferences("mysetting1", MODE_PRIVATE);
+		boolean isStart = pref.getBoolean("pref_key_start", true);
+		mediaPlayer = MediaPlayer.create(this, R.raw.def);
+		if (isStart) {
+			textShan();
+		} else {
+			closeActivity();
+		}
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				closeActivity();
+			}
+		});
+
+
+	}
+
+	private void initControl() {
 		textView1 = findViewById(R.id.textView1);
 		textView2 = findViewById(R.id.bie);
 		textView3 = findViewById(R.id.zhuibeihaolema);
@@ -43,15 +64,7 @@ public class MainActivity extends AppCompatActivity {
 		rang.setText("");
 		daojishi.setText("");
 		action.setText("");
-		mediaPlayer = MediaPlayer.create(this, R.raw.def);
 		button = findViewById(R.id.tiaoguo);
-		button.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				closeActivity();
-			}
-		});
-		textShan();
 	}
 
 	public void textShan() {

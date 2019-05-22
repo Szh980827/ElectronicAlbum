@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,6 +69,8 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 	};
 	private List<Photoes> photoesList = new ArrayList<>();
 	private PhotoesAdapter adapter;
+	private boolean isPlay;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,14 +87,10 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 			actionBar.setHomeAsUpIndicator(R.mipmap.touxiang1);
 		}
 		/*
-		 * 加载  PrefFragment
+		 * 获取设置
 		 */
-//		FragmentManager fragmentManager = getFragmentManager();
-//		FragmentTransaction transaction = fragmentManager.beginTransaction();
-//		BlankFragment blankFragment = new BlankFragment();
-//		transaction.add(R.id.prefFragment, blankFragment);
-//		transaction.commit();
-
+		SharedPreferences pref = getSharedPreferences("mysetting1", MODE_PRIVATE);
+		isPlay = pref.getBoolean("pref_key_zidong", true);
 
 
 		/*
@@ -107,7 +107,8 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 						startActivityForResult(intent, 1);
 						break;
 					case R.id.nav_friend:
-						Toast.makeText(Main3Activity.this, "设置", Toast.LENGTH_SHORT).show();
+						Intent intent1 = new Intent(Main3Activity.this, SettingActivity.class);
+						startActivity(intent1);
 						break;
 				}
 				drawerLayout.closeDrawers();
@@ -120,10 +121,25 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		initView();
 		setDefaultValues();
 		bindEvents();
+
 		/*
 		 * mediaPlayer 媒体播放器
 		 */
+
+		SharedPreferences pre = getSharedPreferences("data", MODE_PRIVATE);
+		playId = pre.getInt("playId", 0);
 		playRawMusic(playId);
+		if (isPlay) {
+			playRawMusic(playId);
+			showPlayToast(playId);
+		} else {
+			if (mediaPlayer != null) {
+				mediaPlayer.stop();
+				mediaPlayer.release();
+			}
+			mediaPlayer = MediaPlayer.create(this, rawlist[playId]);
+		}
+
 		mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 			@Override
 			public void onCompletion(MediaPlayer mp) {
@@ -133,6 +149,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 					playId = playId + 1;
 				}
 				playRawMusic(playId);
+				showPlayToast(playId);
 			}
 		});
 		mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -176,6 +193,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 			if (resultCode == RESULT_OK) {
 				playId = Integer.parseInt(data.getStringExtra("PLAY_ID"));
 				playRawMusic(playId);
+				showPlayToast(playId);
 			}
 		}
 	}
@@ -264,6 +282,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 					playId = playId - 1;
 				}
 				playRawMusic(playId);
+				showPlayToast(playId);
 				hideFABMenu();
 				break;
 			case R.id.fab_next:
@@ -273,6 +292,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 					playId = playId + 1;
 				}
 				playRawMusic(playId);
+				showPlayToast(playId);
 				hideFABMenu();
 				break;
 		}
@@ -294,6 +314,10 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		}
 		mediaPlayer = MediaPlayer.create(this, rawlist[id]);
 		mediaPlayer.start();
+
+	}
+
+	private void showPlayToast(int id) {
 		Toast.makeText(this, "正在播放：" + rawName[id], Toast.LENGTH_SHORT).show();
 	}
 
@@ -306,6 +330,15 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 	@Override
 	protected void onStart() {
 		super.onStart();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+		editor.putInt("playId", playId);
+		editor.apply();
+
 	}
 
 	/*
