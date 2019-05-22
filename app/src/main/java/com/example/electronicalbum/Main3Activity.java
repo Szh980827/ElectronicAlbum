@@ -79,6 +79,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 
 	private long firstTime;
 
+	private String playmode;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,11 +97,6 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 			actionBar.setHomeAsUpIndicator(R.mipmap.touxiang1);
 		}
 		textView = findViewById(R.id.tv_nowplay);
-		/*
-		 * 获取设置
-		 */
-		SharedPreferences pref = getSharedPreferences("mysetting1", MODE_PRIVATE);
-		isPlay = pref.getBoolean("pref_key_zidong", true);
 
 
 		/*
@@ -135,12 +131,17 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		/*
 		 * mediaPlayer 媒体播放器
 		 */
-
+		/*
+		 * 获取设置、数据库信息
+		 */
+		SharedPreferences pref = getSharedPreferences("mysetting1", MODE_PRIVATE);
+		isPlay = pref.getBoolean("pref_key_zidong", true);
 		SharedPreferences pre = getSharedPreferences("data", MODE_PRIVATE);
 		playId = pre.getInt("playId", 0);
 		if (isPlay) {
 			playRawMusic(playId);
 			showPlayToast(playId);
+			savaPlayId();
 		} else {
 			if (mediaPlayer != null) {
 				mediaPlayer.stop();
@@ -278,6 +279,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 				}
 				playRawMusic(playId);
 				showPlayToast(playId);
+				savaPlayId();
 				hideFABMenu();
 				break;
 			case R.id.fab_next:
@@ -288,6 +290,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 				}
 				playRawMusic(playId);
 				showPlayToast(playId);
+				savaPlayId();
 				hideFABMenu();
 				break;
 		}
@@ -300,7 +303,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 	}
 
 	/*
-	 * 媒体播放器相关
+	 * 媒体播放器 ： 音乐播放器初始化，播放
 	 */
 	private void playRawMusic(int id) {
 		if (mediaPlayer != null) {
@@ -309,24 +312,56 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		}
 		mediaPlayer = MediaPlayer.create(this, rawlist[id]);
 		mediaPlayer.start();
-
 	}
 
+	/*
+	 * 媒体播放器 ： 通过toast显示当前正在播放的音乐
+	 */
 	private void showPlayToast(int id) {
 		Toast.makeText(this, "正在播放：" + rawName[id], Toast.LENGTH_SHORT).show();
 	}
 
+	/*
+	 * 自动播放下一曲
+	 */
 	private void zidongPlayer() {
 		mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 			@Override
 			public void onCompletion(MediaPlayer mp) {
-				if (playId == rawlist.length - 1) {
-					playId = 0;
-				} else {
-					playId = playId + 1;
+				SharedPreferences pref1 = getSharedPreferences("mysetting1", MODE_PRIVATE);
+				playmode = pref1.getString("pref_key_playmode", "列表循环");
+				if (playmode.equals("列表循环")) {
+					if (playId == rawlist.length - 1) {
+						playId = 0;
+					} else {
+						playId = playId + 1;
+					}
+					playRawMusic(playId);
+					showPlayToast(playId);
+					savaPlayId();
+				} else if (playmode.equals("顺序播放")) {
+					if (playId == rawlist.length - 1) {
+						mediaPlayer.stop();
+					} else {
+						playId = playId + 1;
+						playRawMusic(playId);
+						showPlayToast(playId);
+						savaPlayId();
+					}
+				} else if (playmode.equals("单曲循环")) {
+					playRawMusic(playId);
+					showPlayToast(playId);
+					savaPlayId();
+				} else if (playmode.equals("随机列表")) {
+					int num = new Random().nextInt(rawlist.length);
+					if (num == playId) {
+						num = new Random().nextInt(rawlist.length);
+					}
+					playId = num;
+					playRawMusic(playId);
+					showPlayToast(playId);
+					savaPlayId();
 				}
-				playRawMusic(playId);
-				showPlayToast(playId);
 			}
 		});
 		mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -335,6 +370,15 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 				return true;
 			}
 		});
+	}
+
+	/*
+	 * 保存当前播放歌曲Id到数据库
+	 */
+	private void savaPlayId() {
+		SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+		editor.putInt("playId", playId);
+		editor.apply();
 	}
 
 	@Override
@@ -394,9 +438,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		// 第一次肯定会进入到if判断里面，然后把firstTime重新赋值当前的系统时间
 		// 然后点击第二次的时候，当点击间隔时间小于2s，那么退出应用；反之不退出应用
 		if (System.currentTimeMillis() - firstTime >= timeInterval) {
-			SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-			editor.putInt("playId", playId);
-			editor.apply();
+			savaPlayId();
 			Toast.makeText(this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
 			firstTime = System.currentTimeMillis();
 		} else {

@@ -4,6 +4,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-
+    <string-array name="playmode">
+        <item>顺序播放</item>
+        <item>列表循环</item>
+        <item>单曲循环</item>
+        <item>随机列表</item>
+    </string-array>
 
 </resources>

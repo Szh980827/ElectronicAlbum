@@ -12,4 +12,12 @@
         android:summary="@string/pref_summary_zidong"
         android:title="@string/pref_title_zidong" />
 
+    <ListPreference
+        android:dialogTitle="请选择播放方式"
+        android:entries="@array/playmode"
+        android:entryValues="@array/playmode"
+        android:key="@string/pref_key_playmode"
+        android:summary="@string/pref_summary_playmode"
+        android:title="@string/pref_title_playmode" />
+
 </PreferenceScreen>
