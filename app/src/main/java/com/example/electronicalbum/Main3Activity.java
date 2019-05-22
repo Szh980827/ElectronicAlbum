@@ -2,7 +2,6 @@ package com.example.electronicalbum;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +13,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -27,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -39,14 +41,16 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 	private FloatingActionButton fabadd;
 	private boolean isAdd = false;
 	private RelativeLayout rlAddBill;
-	private int[] llId = new int[]{R.id.ll_last, R.id.ll_next, R.id.ll_play};
+	private int[] llId = new int[]{R.id.ll_last, R.id.ll_next, R.id.ll_play, R.id.ll_nowPlay};
 	private LinearLayout[] ll = new LinearLayout[llId.length];
 	private int[] fabId = new int[]{R.id.fab_last, R.id.fab_next, R.id.fab_play};
 	private FloatingActionButton[] fab = new FloatingActionButton[fabId.length];
 	private AnimatorSet addBillTranslate1;
 	private AnimatorSet addBillTranslate2;
 	private AnimatorSet addBillTranslate3;
+	private AnimatorSet addBillTranslate4;
 	private MediaPlayer mediaPlayer;
+	private TextView textView;
 	private int[] rawlist = new int[]{R.raw.yanhuo, R.raw.diqiuzhiyan,
 			R.raw.haoxianghaoxiang, R.raw.forforever, R.raw.yilei, R.raw.guowang,
 			R.raw.wangpai, R.raw.shanhai, R.raw.weiguang, R.raw.xieerpo, R.raw.shijieshangmeiyou,
@@ -70,12 +74,17 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 	private List<Photoes> photoesList = new ArrayList<>();
 	private PhotoesAdapter adapter;
 	private boolean isPlay;
+	private int count = 0;
+	private FragmentManager manager = getSupportFragmentManager();
+
+	private long firstTime;
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main3);
+		Log.d("Main3Activity", "onCreate");
 		setString();
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -86,6 +95,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 			actionBar.setDisplayHomeAsUpEnabled(true);
 			actionBar.setHomeAsUpIndicator(R.mipmap.touxiang1);
 		}
+		textView = findViewById(R.id.tv_nowplay);
 		/*
 		 * 获取设置
 		 */
@@ -106,7 +116,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 						intent.putExtra("musicNow", playId + "");
 						startActivityForResult(intent, 1);
 						break;
-					case R.id.nav_friend:
+					case R.id.nav_setting:
 						Intent intent1 = new Intent(Main3Activity.this, SettingActivity.class);
 						startActivity(intent1);
 						break;
@@ -128,7 +138,6 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 
 		SharedPreferences pre = getSharedPreferences("data", MODE_PRIVATE);
 		playId = pre.getInt("playId", 0);
-		playRawMusic(playId);
 		if (isPlay) {
 			playRawMusic(playId);
 			showPlayToast(playId);
@@ -139,25 +148,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 			}
 			mediaPlayer = MediaPlayer.create(this, rawlist[playId]);
 		}
-
-		mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-			@Override
-			public void onCompletion(MediaPlayer mp) {
-				if (playId == rawlist.length - 1) {
-					playId = 0;
-				} else {
-					playId = playId + 1;
-				}
-				playRawMusic(playId);
-				showPlayToast(playId);
-			}
-		});
-		mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-			@Override
-			public boolean onError(MediaPlayer mp, int what, int extra) {
-				return true;
-			}
-		});
+		zidongPlayer();
 
 		/*
 		 * CardView
@@ -233,6 +224,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		addBillTranslate1 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.set_animator);
 		addBillTranslate2 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.set_animator);
 		addBillTranslate3 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.set_animator);
+		addBillTranslate4 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.set_animator);
 	}
 
 	/*
@@ -252,6 +244,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.fab1:
+				textView.setText(" " + rawName[playId] + " ");
 				fabadd.setImageResource(isAdd ? R.mipmap.add : R.mipmap.add2);
 				isAdd = !isAdd;
 				rlAddBill.setVisibility(isAdd ? View.VISIBLE : View.GONE);
@@ -262,11 +255,13 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 					addBillTranslate2.start();
 					addBillTranslate3.setTarget(ll[2]);
 					addBillTranslate3.start();
+					addBillTranslate4.setTarget(ll[3]);
+					addBillTranslate4.start();
 				}
 				break;
 			case R.id.fab_play:
-				final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-				if (audioManager.isMusicActive()) {
+				final AudioManager audioManager1 = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+				if (audioManager1.isMusicActive()) {
 					mediaPlayer.pause();
 					Toast.makeText(this, "暂停", Toast.LENGTH_SHORT).show();
 				} else {
@@ -321,35 +316,93 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		Toast.makeText(this, "正在播放：" + rawName[id], Toast.LENGTH_SHORT).show();
 	}
 
+	private void zidongPlayer() {
+		mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+			@Override
+			public void onCompletion(MediaPlayer mp) {
+				if (playId == rawlist.length - 1) {
+					playId = 0;
+				} else {
+					playId = playId + 1;
+				}
+				playRawMusic(playId);
+				showPlayToast(playId);
+			}
+		});
+		mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+			@Override
+			public boolean onError(MediaPlayer mp, int what, int extra) {
+				return true;
+			}
+		});
+	}
+
 	@Override
 	protected void onRestart() {
 		super.onRestart();
 		hideFABMenu();
+		Log.d("Main3Activity", "onRestart");
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
+		Log.d("Main3Activity", "onStart");
+		zidongPlayer();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Log.d("Main3Activity", "onResume");
+		zidongPlayer();
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-		editor.putInt("playId", playId);
-		editor.apply();
+		Log.d("Main3Activity", "onDestroy");
+	}
 
+	@Override
+	protected void onStop() {
+		super.onStop();
+		Log.d("Main3Activity", "onStop");
+		zidongPlayer();
 	}
 
 	/*
 	 * 重写安卓返回按钮
 	 */
-	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			finish();
+		if (keyCode == KeyEvent.KEYCODE_BACK) {// 点击了返回按键
+			if (manager.getBackStackEntryCount() != 0) {
+				manager.popBackStack();
+			} else {
+				exitApp(2000);// 退出应用
+			}
+			return true;// 返回true，防止该事件继续向下传播
 		}
-		return true;
+		return super.onKeyDown(keyCode, event);
+	}
+
+	/**
+	 * 退出应用
+	 * 设置第二次点击退出的时间间隔
+	 */
+	private void exitApp(long timeInterval) {
+		// 第一次肯定会进入到if判断里面，然后把firstTime重新赋值当前的系统时间
+		// 然后点击第二次的时候，当点击间隔时间小于2s，那么退出应用；反之不退出应用
+		if (System.currentTimeMillis() - firstTime >= timeInterval) {
+			SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+			editor.putInt("playId", playId);
+			editor.apply();
+			Toast.makeText(this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
+			firstTime = System.currentTimeMillis();
+		} else {
+			finish();// 销毁当前activity
+			System.exit(0);// 完全退出应用
+		}
 	}
 
 	/*

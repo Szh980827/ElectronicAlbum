@@ -7,11 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".Main3Activity">
 
-    <FrameLayout
-        android:id="@+id/prefFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -45,7 +40,7 @@
                 android:id="@+id/rlAddBill"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#A4363535"
+                android:background="#00FFFFFF"
                 android:visibility="gone">
 
                 <LinearLayout
@@ -54,19 +49,20 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="100dp"
+                    android:gravity="right"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/tv_next"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginRight="8dp"
                         android:layout_toLeftOf="@+id/miniFab02"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:paddingBottom="5dp"
-                        android:text="下一曲  "
-                        android:textColor="#B0FFFFFF"
+                        android:background="@color/colorBackground"
+                        android:gravity="center_horizontal"
+                        android:text=" 下一曲 "
+                        android:textColor="#E8FFFFFF"
                         android:textSize="15sp" />
 
                     <android.support.design.widget.FloatingActionButton
@@ -87,19 +83,20 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/ll_next"
                     android:layout_marginBottom="10dp"
+                    android:gravity="right"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/tv_last"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginRight="8dp"
                         android:layout_toLeftOf="@+id/miniFab02"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:paddingBottom="5dp"
-                        android:text="上一曲  "
-                        android:textColor="#B0FFFFFF"
+                        android:background="@color/colorBackground"
+                        android:gravity="center_horizontal"
+                        android:text=" 上一曲 "
+                        android:textColor="#E8FFFFFF"
                         android:textSize="15sp" />
 
                     <android.support.design.widget.FloatingActionButton
@@ -120,19 +117,20 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/ll_last"
                     android:layout_marginBottom="10dp"
+                    android:gravity="right"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/tv_play"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginRight="8dp"
                         android:layout_toLeftOf="@+id/miniFab02"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:paddingBottom="5dp"
-                        android:text="播放/暂停  "
-                        android:textColor="#B0FFFFFF"
+                        android:background="@color/colorBackground"
+                        android:gravity="center_horizontal"
+                        android:text=" 播放/暂停 "
+                        android:textColor="#E8FFFFFF"
                         android:textSize="15sp" />
 
                     <android.support.design.widget.FloatingActionButton
@@ -146,6 +144,31 @@
                         app:fabSize="mini" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_nowPlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/ll_play"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_nowplay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="25dp"
+                        android:layout_toLeftOf="@+id/miniFab02"
+                        android:background="@drawable/text_view_border"
+                        android:gravity="center_horizontal"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+
+
+                </LinearLayout>
+
             </RelativeLayout>
 
             <android.support.design.widget.FloatingActionButton
@@ -154,6 +177,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom|end"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="20dp"
                 android:elevation="5dp"
