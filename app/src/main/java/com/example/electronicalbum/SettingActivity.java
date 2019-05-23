@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.preference.CheckBoxPreference;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,17 +19,13 @@ public class SettingActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting);
-		textView = findViewById(R.id.title_text);
-		textView.setText("设置");
-		button = findViewById(R.id.title_back);
-
-		SharedPreferences pref = getSharedPreferences("mysetting", MODE_PRIVATE);
-		boolean isStart = pref.getBoolean("pref_key_start", false);
-		boolean isPlay = pref.getBoolean("pref_key_zidong", false);
-		button.setOnClickListener(new View.OnClickListener() {
+		Toolbar toolbar = findViewById(R.id.toolbar_setting);
+		toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white);
+		setSupportActionBar(toolbar);
+		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				finish();
+			public void onClick(View view) {
+				SettingActivity.this.onBackPressed();
 			}
 		});
 	}

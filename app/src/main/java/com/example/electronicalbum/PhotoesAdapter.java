@@ -1,6 +1,7 @@
 package com.example.electronicalbum;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -48,7 +49,20 @@ public class PhotoesAdapter extends RecyclerView.Adapter<PhotoesAdapter.ViewHold
 			mContext = parent.getContext();
 		}
 		View view = LayoutInflater.from(mContext).inflate(R.layout.phonoes_item, parent, false);
-		return new ViewHolder(view);
+		final ViewHolder holder = new ViewHolder(view);
+		holder.cardView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				int position = holder.getAdapterPosition();
+				Photoes photoes = mPhotoesList.get(position);
+				Intent intent = new Intent(mContext, PhotoActivity.class);
+				intent.putExtra(PhotoActivity.PHOTO_NAME, photoes.getName());
+				intent.putExtra(PhotoActivity.PHOTO_IMAGE_ID, photoes.getPhonoesId());
+				mContext.startActivity(intent);
+			}
+		});
+
+		return holder;
 	}
 
 	@Override

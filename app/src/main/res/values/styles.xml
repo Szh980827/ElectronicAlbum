@@ -12,5 +12,12 @@
 
     </style>
 
+    <style name="textToolbarTitle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#ffff</item>
+    </style>
 
+    <style name="PhotoActivityTheme" parent="AppTheme">
+
+    </style>
 </resources>

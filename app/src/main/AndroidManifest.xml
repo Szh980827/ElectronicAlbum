@@ -12,18 +12,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingActivity"></activity>
-        <activity
-            android:name=".Main3Activity"
-            android:launchMode="singleTask" />
-        <activity android:name=".Main2Activity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".PhotoActivity"
+            android:theme="@style/PhotoActivityTheme"></activity>
+        <activity android:name=".AboutActivity"
+            android:theme="@style/PhotoActivityTheme"/>
+        <activity android:name=".HelloActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SettingActivity"
+            android:theme="@style/PhotoActivityTheme"/>
+        <activity
+            android:name=".Main3Activity"
+            android:launchMode="singleTask" />
+        <activity android:name=".Main2Activity"
+            android:theme="@style/PhotoActivityTheme"/>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

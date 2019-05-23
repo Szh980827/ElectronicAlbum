@@ -11,7 +11,7 @@
         android:layout_height="42dp"
         android:layout_margin="10dp"
         android:layout_gravity="left|center"
-        android:background="@mipmap/back"
+        android:background="@mipmap/ic_arrow_back_white"
         android:textSize="25sp" />
 
     <TextView

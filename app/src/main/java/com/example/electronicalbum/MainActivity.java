@@ -9,6 +9,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -27,20 +29,18 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main);
 		final ActionBar actionbar = getSupportActionBar();
 		if (actionbar != null) {
 			actionbar.hide();
 		}
 		initControl();
-		SharedPreferences pref = getSharedPreferences("mysetting1", MODE_PRIVATE);
-		boolean isStart = pref.getBoolean("pref_key_start", true);
+
 		mediaPlayer = MediaPlayer.create(this, R.raw.def);
-		if (isStart) {
-			textShan();
-		} else {
-			closeActivity();
-		}
+		textShan();
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

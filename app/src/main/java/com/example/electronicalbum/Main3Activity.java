@@ -51,30 +51,33 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 	private AnimatorSet addBillTranslate4;
 	private MediaPlayer mediaPlayer;
 	private TextView textView;
-	private int[] rawlist = new int[]{R.raw.yanhuo, R.raw.diqiuzhiyan,
+	private int[] rawlist = new int[]{R.raw.chunfeng,R.raw.yanhuo, R.raw.diqiuzhiyan,
 			R.raw.haoxianghaoxiang, R.raw.forforever, R.raw.yilei, R.raw.guowang,
 			R.raw.wangpai, R.raw.shanhai, R.raw.weiguang, R.raw.xieerpo, R.raw.shijieshangmeiyou,
 			R.raw.zuichibi, R.raw.danning, R.raw.shengsuo, R.raw.xiaojiuwo, R.raw.mumachengshi,
 			R.raw.xiangwozheyang, R.raw.xiaochou, R.raw.yourname};
-	private String rawName[] = {"烟火里的尘埃", "地球之盐", "好想好想+情深深雨蒙蒙",
-			"For Forever", "异类", "国王与乞丐", "王牌对王牌", "山海(live)", "微光", "鞋儿破 帽儿破(live)",
-			"世界上没有真正的感同身受(live)", "醉赤壁", "丹宁执着", "圣所", "小酒窝", "牧马城市", "像我这样的人(live)",
-			"消愁(live)", "你的名字bgm"};
+	private String rawName[] = {"春风十里 - 鹿先森乐队","烟火里的尘埃 - 华晨宇", "地球之盐 - 华晨宇", "好想好想+情深深雨蒙蒙 - 华晨宇",
+			"For Forever - 华晨宇", "异类 - 华晨宇", "国王与乞丐 - 华晨宇", "王牌对王牌(live) - 华晨宇", "山海(live) - 华晨宇", "微光 - 华晨宇", "鞋儿破 帽儿破(live) - 华晨宇",
+			"世界上没有真正的感同身受(live) - 王源", "醉赤壁 - 林俊杰", "丹宁执着 - 林俊杰", "圣所 - 林俊杰", "小酒窝 - 林俊杰", "牧马城市 - 毛不易", "像我这样的人(live) - 毛不易",
+			"消愁(live) - 毛不易", "你的名字bgm"};
 	private int playId = 0;
 
 	private Photoes[] photoes = {
-			new Photoes("one", R.mipmap.photo1),
-			new Photoes("two", R.mipmap.photo2),
-			new Photoes("three", R.mipmap.photo3),
-			new Photoes("for", R.mipmap.photo4),
-			new Photoes("five", R.mipmap.photo5),
-			new Photoes("six", R.mipmap.photo6),
-			new Photoes("seven", R.mipmap.photo7)
+			new Photoes("2015/12/31-元旦晚会", R.mipmap.f2015_1231),
+			new Photoes("2016/03/06", R.mipmap.f2016_36),
+			new Photoes("2016/04/13-远足", R.mipmap.f2016_413),
+			new Photoes("2016/10/03", R.mipmap.f2016_10_3),
+			new Photoes("2017/06/13-去上海", R.mipmap.f2017_613qushanghai),
+			new Photoes("2017/06/14-欢乐谷", R.mipmap.f2017_614huanle),
+			new Photoes("2017/06/14-东方明珠", R.mipmap.f2017_614dongfang),
+			new Photoes("2017/06/15-星空艺术馆", R.mipmap.f2017_615xingkong),
+			new Photoes("2017/06/16-上海豫园", R.mipmap.yuyuan7),
+			new Photoes("2017/06/17-济南", R.mipmap.f2017_6_17),
+			new Photoes("2017/06/18-高二聚会", R.mipmap.f2017_6_18)
 	};
 	private List<Photoes> photoesList = new ArrayList<>();
 	private PhotoesAdapter adapter;
 	private boolean isPlay;
-	private int count = 0;
 	private FragmentManager manager = getSupportFragmentManager();
 
 	private long firstTime;
@@ -86,7 +89,6 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main3);
 		Log.d("Main3Activity", "onCreate");
-		setString();
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		drawerLayout = findViewById(R.id.drawer_layout);
@@ -116,6 +118,10 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 						Intent intent1 = new Intent(Main3Activity.this, SettingActivity.class);
 						startActivity(intent1);
 						break;
+					case R.id.nav_about:
+						Intent intent2 = new Intent(Main3Activity.this, AboutActivity.class);
+						startActivity(intent2);
+						break;
 				}
 				drawerLayout.closeDrawers();
 				return true;
@@ -138,6 +144,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		isPlay = pref.getBoolean("pref_key_zidong", true);
 		SharedPreferences pre = getSharedPreferences("data", MODE_PRIVATE);
 		playId = pre.getInt("playId", 0);
+
 		if (isPlay) {
 			playRawMusic(playId);
 			showPlayToast(playId);
@@ -156,7 +163,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 		 */
 		initPhotoes();
 		RecyclerView recyclerView = findViewById(R.id.recycler_view);
-		GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+		GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
 		recyclerView.setLayoutManager(layoutManager);
 		adapter = new PhotoesAdapter(photoesList);
 		recyclerView.setAdapter(adapter);
@@ -168,10 +175,8 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 
 	private void initPhotoes() {
 		photoesList.clear();
-		for (int i = 0; i < 50; i++) {
-			Random random = new Random();
-			int index = random.nextInt(photoes.length);
-			photoesList.add(photoes[index]);
+		for (int i = 0; i < photoes.length; i++) {
+			photoesList.add(photoes[i]);
 		}
 	}
 
@@ -186,6 +191,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 				playId = Integer.parseInt(data.getStringExtra("PLAY_ID"));
 				playRawMusic(playId);
 				showPlayToast(playId);
+				savaPlayId();
 			}
 		}
 	}
@@ -391,6 +397,7 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 	@Override
 	protected void onStart() {
 		super.onStart();
+
 		Log.d("Main3Activity", "onStart");
 		zidongPlayer();
 	}
@@ -450,17 +457,4 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 	/*
 	 * 歌曲名添加演唱者
 	 */
-	private void setString() {
-		for (int i = 0; i < rawName.length; i++) {
-			if (i < 10) {
-				rawName[i] = rawName[i] + " - 华晨宇";
-			} else if (i == 10) {
-				rawName[i] = rawName[i] + " - 王源";
-			} else if (i > 10 & i < 15) {
-				rawName[i] = rawName[i] + " - 林俊杰";
-			} else if (i > 14 & i < 18) {
-				rawName[i] = rawName[i] + " - 毛不易";
-			}
-		}
-	}
 }
