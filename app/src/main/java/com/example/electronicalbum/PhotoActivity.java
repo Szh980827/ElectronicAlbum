@@ -28,9 +28,8 @@ public class PhotoActivity extends AppCompatActivity {
 			R.mipmap.yuandan11, R.mipmap.yuandan12, R.mipmap.yuandan13, R.mipmap.yuandan14, R.mipmap.yuandan15,
 			R.mipmap.yuandan16, R.mipmap.yuandan17, R.mipmap.yuandan18, R.mipmap.yuandan19, R.mipmap.yuandan20};
 
-
-	private int[] photoesChunqu36 = new int[]{R.mipmap.chu361, R.mipmap.chu362, R.mipmap.chu363, R.mipmap.chu364, R.mipmap.chu365,
-			R.mipmap.chu366, R.mipmap.chu367, R.mipmap.chu368};
+	private int[] photoesChunqu36 = new int[]{R.mipmap.chu361, R.mipmap.chu362,
+			R.mipmap.chu363, R.mipmap.chu365, R.mipmap.chu366, R.mipmap.chu367, R.mipmap.chu368};
 
 	private int[] photoesYuanzu = new int[]{R.mipmap.yuanzu1, R.mipmap.yuanzu2,
 			R.mipmap.yuanzu5, R.mipmap.yuanzu6, R.mipmap.yuanzu7, R.mipmap.yuanzu8, R.mipmap.yuanzu9, R.mipmap.yuanzu10,
@@ -42,16 +41,17 @@ public class PhotoActivity extends AppCompatActivity {
 			R.mipmap.chu10311, R.mipmap.chu10312, R.mipmap.chu10313, R.mipmap.chu10316, R.mipmap.chu10317, R.mipmap.chu10318};
 
 	private int[] photoesQushang = new int[]{R.mipmap.qushanghai1, R.mipmap.qushanghai2, R.mipmap.qushanghai3,
-			R.mipmap.qushanghai4, R.mipmap.qushanghai5, R.mipmap.qushanghai6, R.mipmap.qushanghai7,
+			R.mipmap.qushanghai4, R.mipmap.qushanghai5,
 			R.mipmap.qushanghai8, R.mipmap.qushanghai9, R.mipmap.qushanghai10, R.mipmap.qushanghai11, R.mipmap.qushanghai12};
 
 	private int[] photoesDongfang = new int[]{R.mipmap.dongfang1, R.mipmap.dongfang2, R.mipmap.dongfang3, R.mipmap.dongfang4,
 			R.mipmap.dongfang5, R.mipmap.dongfang6, R.mipmap.dongfang7, R.mipmap.dongfang8, R.mipmap.dongfang9, R.mipmap.dongfang10,
-			R.mipmap.dongfang11, R.mipmap.dongfang12, R.mipmap.dongfang13, R.mipmap.dongfang14, R.mipmap.dongfang15, R.mipmap.dongfang16,
+			R.mipmap.dongfang11, R.mipmap.dongfang12,  R.mipmap.dongfang15, R.mipmap.dongfang16,
 			R.mipmap.dongfang17, R.mipmap.dongfang18, R.mipmap.dongfang19};
 
 	private int[] photoesHuanle = new int[]{R.mipmap.huanlegu2, R.mipmap.huanlegu3, R.mipmap.huanlegu4, R.mipmap.huanlegu5,
-			R.mipmap.huanlegu6, R.mipmap.huanlegu7, R.mipmap.huanlegu8, R.mipmap.huanlegu9, R.mipmap.huanlegu10, R.mipmap.huanlegu11,
+			R.mipmap.huanlegu6, R.mipmap.huanlegu7, R.mipmap.huanlegu8,
+			R.mipmap.huanlegu9, R.mipmap.huanlegu10,
 			R.mipmap.huanlegu12, R.mipmap.huanlegu13, R.mipmap.huanlegu14, R.mipmap.huanlegu15, R.mipmap.huanlegu16, R.mipmap.huanlegu17,};
 
 	private int[] photoesXingkong = new int[]{R.mipmap.xingkong2, R.mipmap.xingkong3, R.mipmap.xingkong4, R.mipmap.xingkong5,
@@ -60,7 +60,8 @@ public class PhotoActivity extends AppCompatActivity {
 			R.mipmap.xingkong18, R.mipmap.xingkong19, R.mipmap.xingkong20};
 
 	private int[] photoesYuyuan = new int[]{R.mipmap.yuyuan1, R.mipmap.yuyuan2, R.mipmap.yuyuan3, R.mipmap.yuyuan4, R.mipmap.yuyuan5, R.mipmap.yuyuan6,
-			R.mipmap.yuyuan7, R.mipmap.yuyuan8, R.mipmap.yuyuan9, R.mipmap.yuyuan10, R.mipmap.yuyuan11, R.mipmap.yuyuan12, R.mipmap.yuyuan13, R.mipmap.yuyuan14,
+			R.mipmap.yuyuan7, R.mipmap.yuyuan8, R.mipmap.yuyuan9, R.mipmap.yuyuan10,
+			R.mipmap.yuyuan11, R.mipmap.yuyuan12, R.mipmap.yuyuan13,
 			R.mipmap.yuyuan15, R.mipmap.yuyuan16, R.mipmap.yuyuan17, R.mipmap.yuyuan18,};
 
 	private int[] photoesJinan = new int[]{R.mipmap.jinan12,R.mipmap.jinan1, R.mipmap.jinan3,  R.mipmap.jinan2, R.mipmap.jinan4, R.mipmap.jinan5, R.mipmap.jinan6,
@@ -105,33 +106,12 @@ public class PhotoActivity extends AppCompatActivity {
 	private Photo[] setPhoto() {
 		Photo[] photos = new Photo[]{};
 		switch (photoesName) {
-			case "2015/12/31-元旦晚会":
-				Photo[] photos1 = new Photo[photoesYuandan.length];
-				for (int i = 0; i < photos1.length; i++) {
-					photos1[i] = new Photo(photoesYuandan[i]);
-				}
-				photos = photos1;
-				break;
 			case "2016/03/06":
 				Photo[] photos2 = new Photo[photoesChunqu36.length];
 				for (int i = 0; i < photos2.length; i++) {
 					photos2[i] = new Photo(photoesChunqu36[i]);
 				}
 				photos = photos2;
-				break;
-			case "2016/04/13-远足":
-				Photo[] photos3 = new Photo[photoesYuanzu.length];
-				for (int i = 0; i < photos3.length; i++) {
-					photos3[i] = new Photo(photoesYuanzu[i]);
-				}
-				photos = photos3;
-				break;
-			case "2016/10/03":
-				Photo[] photos4 = new Photo[photoesChu103.length];
-				for (int i = 0; i < photos4.length; i++) {
-					photos4[i] = new Photo(photoesChu103[i]);
-				}
-				photos = photos4;
 				break;
 			case "2017/06/13-去上海":
 				Photo[] photos5 = new Photo[photoesQushang.length];
@@ -154,13 +134,6 @@ public class PhotoActivity extends AppCompatActivity {
 				}
 				photos = photos7;
 				break;
-			case "2017/06/15-星空艺术馆":
-				Photo[] photos8 = new Photo[photoesXingkong.length];
-				for (int i = 0; i < photos8.length; i++) {
-					photos8[i] = new Photo(photoesXingkong[i]);
-				}
-				photos = photos8;
-				break;
 			case "2017/06/16-上海豫园":
 				Photo[] photos9 = new Photo[photoesYuyuan.length];
 				for (int i = 0; i < photos9.length; i++) {
@@ -174,13 +147,6 @@ public class PhotoActivity extends AppCompatActivity {
 					photos10[i] = new Photo(photoesJinan[i]);
 				}
 				photos = photos10;
-				break;
-			case "2017/06/18-高二聚会":
-				Photo[] photos11 = new Photo[photoesJuhui.length];
-				for (int i = 0; i < photos11.length; i++) {
-					photos11[i] = new Photo(photoesJuhui[i]);
-				}
-				photos = photos11;
 				break;
 
 		}

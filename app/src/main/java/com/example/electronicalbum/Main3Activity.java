@@ -63,17 +63,17 @@ public class Main3Activity extends AppCompatActivity implements View.OnClickList
 	private int playId = 0;
 
 	private Photoes[] photoes = {
-			new Photoes("2015/12/31-元旦晚会", R.mipmap.f2015_1231),
+		//	new Photoes("2015/12/31-元旦晚会", R.mipmap.f2015_1231),
 			new Photoes("2016/03/06", R.mipmap.f2016_36),
-			new Photoes("2016/04/13-远足", R.mipmap.f2016_413),
-			new Photoes("2016/10/03", R.mipmap.f2016_10_3),
+		//	new Photoes("2016/04/13-远足", R.mipmap.f2016_413),
+		//	new Photoes("2016/10/03", R.mipmap.f2016_10_3),
 			new Photoes("2017/06/13-去上海", R.mipmap.f2017_613qushanghai),
 			new Photoes("2017/06/14-欢乐谷", R.mipmap.f2017_614huanle),
 			new Photoes("2017/06/14-东方明珠", R.mipmap.f2017_614dongfang),
-			new Photoes("2017/06/15-星空艺术馆", R.mipmap.f2017_615xingkong),
+		//	new Photoes("2017/06/15-星空艺术馆", R.mipmap.f2017_615xingkong),
 			new Photoes("2017/06/16-上海豫园", R.mipmap.yuyuan7),
 			new Photoes("2017/06/17-济南", R.mipmap.f2017_6_17),
-			new Photoes("2017/06/18-高二聚会", R.mipmap.f2017_6_18)
+		//	new Photoes("2017/06/18-高二聚会", R.mipmap.f2017_6_18)
 	};
 	private List<Photoes> photoesList = new ArrayList<>();
 	private PhotoesAdapter adapter;
