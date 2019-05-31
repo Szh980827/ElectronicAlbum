@@ -41,47 +41,11 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
-                    android:text="小胖子龟头"
+                    android:text="haha"
                     android:textColor="#7893d0"
                     android:textSize="18sp" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:text="潼儿子，你豪爸爸永远爱你！"
-                android:textColor="#607B8B"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginTop="5dp"
-                android:text="给你做个音乐相册，希望能勾起你曾经的回忆 😝"
-                android:textColor="#607B8B"
-                android:textSize="16sp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginTop="5dp"
-                android:text="以后别忘了开开心心的！😬"
-                android:textColor="#607B8B"
-                android:textSize="16sp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginTop="5dp"
-                android:text="好心情是自己给的，哈哈 😊"
-                android:textColor="#607B8B"
-                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
