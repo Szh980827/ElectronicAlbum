@@ -1,19 +1,11 @@
 package com.example.electronicalbum;
 
-import android.content.SharedPreferences;
-import android.preference.CheckBoxPreference;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.TextView;
 
 public class SettingActivity extends AppCompatActivity {
-
-	private TextView textView;
-	private Button button;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

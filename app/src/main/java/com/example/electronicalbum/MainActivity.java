@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 		}
 		initControl();
 
-		mediaPlayer = MediaPlayer.create(this, R.raw.def);
+		mediaPlayer = MediaPlayer.create(this, R.raw.mainactivity_bg);
 		textShan();
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
